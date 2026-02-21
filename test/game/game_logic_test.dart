@@ -173,6 +173,21 @@ void main() {
     });
   });
 
+  group('Specific scenario: P0 first hole clockwise', () {
+    test('After P0 moves from hole 0 clockwise, board matches expected', () {
+      // Player 1 (P0) starts from first hole (0) in clockwise direction.
+      // P0 row (0-7): 1 6 6 0 1 6 6 6, P1 row (8-15): 6 1 5 5 5 5 0 5 (hole 15 = 5 so total stones = 64)
+      const expected = [
+        1, 6, 6, 0, 1, 6, 6, 6, // Player 0 (top)
+        6, 1, 5, 5, 5, 5, 0, 5, // Player 1 (bottom)
+      ];
+      final state = GameState.initial();
+      final next = performMove(state, 0, SowingDirection.clockwise);
+      expect(next, isNotNull);
+      expect(next!.board, expected);
+    });
+  });
+
   group('isGameOver and getWinner', () {
     test('isGameOver true when one row empty', () {
       final full = GameState.initial();
